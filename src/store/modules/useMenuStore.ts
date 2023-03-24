@@ -136,7 +136,35 @@ const useMenuStore = defineStore('menu', {
               ]
             }
           ]
-        }
+        }, {
+          path: '/echarts',
+          id: '2',
+          flag: false,
+          name: 'echarts',
+          type: 'echarts',
+          icon: 'bicycle',
+          children: [
+            {
+              path: '/echarts/pie-chart',
+              id: '2-1',
+              flag: false,
+              name: '饼图',
+              type: 'pie-chart',
+              icon: 'location',
+              children: [
+                {
+                  path: '/echarts/pie-chart/chart1',
+                  id: '2-1-1',
+                  flag: false,
+                  name: 'chart1',
+                  type: 'chart1',
+                  icon: 'location',
+                  children: []
+                }
+              ]
+            }
+          ]
+        },
       ] as MenuItemType[]
     }
   },

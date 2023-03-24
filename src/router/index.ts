@@ -32,10 +32,10 @@ const routes: RouteRecordRaw[] = [
             path: 'state',
             component: () => import('@/views/transition/state.vue')
           },
-          {
-            path: 'provide',
-            component: () => import('@/views/provide/index.vue')
-          }
+          // {
+          //   path: 'provide',
+          //   component: () => import('@/views/provide/index.vue')
+          // }
         ]
       },
       {
@@ -67,6 +67,29 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'infer',
             component: () => import('@/views/ts/type/index.vue')
+          }
+        ]
+      },
+      {
+        path: 'props',
+        children: [
+          {
+            path: 'provide',
+            component: () => import('@/views/props/index.vue')
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/echarts',
+    children: [
+      {
+        path: 'pie-chart',
+        children: [
+          {
+            path: 'chart1',
+            component: () => import('@/views/echarts/index.vue')
           }
         ]
       },
