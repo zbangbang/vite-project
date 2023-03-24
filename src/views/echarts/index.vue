@@ -1,6 +1,6 @@
 <template>
   <div class="chart-box">
-    <relation-chart ref="relationChartRef"></relation-chart>
+    <!-- <relation-chart ref="relationChartRef"></relation-chart> -->
     <les-miserables ref="lesMiserablesRef"></les-miserables>
   </div>
 </template>
@@ -10,10 +10,10 @@ import { onMounted, ref } from 'vue'
 import RelationChart from './components/relationChart.vue'
 import LesMiserables from './components/lesMiserables.vue'
 
-const relationChartRef = ref()
-onMounted(() => {
-  relationChartRef.value.initChart()
-})
+// const relationChartRef = ref()
+// onMounted(() => {
+//   relationChartRef.value.initChart()
+// })
 const lesMiserablesRef = ref()
 onMounted(() => {
   lesMiserablesRef.value.initChart()
