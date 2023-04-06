@@ -138,7 +138,7 @@ const useMenuStore = defineStore('menu', {
           ]
         }, {
           path: '/echarts',
-          id: '2',
+          id: '3',
           flag: false,
           name: 'echarts',
           type: 'echarts',
@@ -146,7 +146,7 @@ const useMenuStore = defineStore('menu', {
           children: [
             {
               path: '/echarts/pie-chart',
-              id: '2-1',
+              id: '3-1',
               flag: false,
               name: '饼图',
               type: 'pie-chart',
@@ -154,10 +154,56 @@ const useMenuStore = defineStore('menu', {
               children: [
                 {
                   path: '/echarts/pie-chart/chart1',
-                  id: '2-1-1',
+                  id: '3-1-1',
                   flag: false,
                   name: 'chart1',
                   type: 'chart1',
+                  icon: 'location',
+                  children: []
+                }
+              ]
+            }
+          ]
+        }, {
+          path: '/cesium',
+          id: '4',
+          flag: false,
+          name: 'cesium',
+          type: 'cesium',
+          icon: 'bicycle',
+          children: [
+            {
+              path: '/cesium/weather',
+              id: '4-1',
+              flag: false,
+              name: '天气',
+              type: 'weather',
+              icon: 'location',
+              children: [
+                {
+                  path: '/cesium/weather/fog',
+                  id: '4-1-1',
+                  flag: false,
+                  name: '雾',
+                  type: 'fog',
+                  icon: 'location',
+                  children: []
+                },
+                {
+                  path: '/cesium/weather/rain',
+                  id: '4-1-2',
+                  flag: false,
+                  name: '雨',
+                  type: 'rain',
+                  icon: 'location',
+                  children: []
+                },
+                {
+                  path: '/cesium/weather/snow',
+                  id: '4-1-3',
+                  flag: false,
+                  name: '雪',
+                  type: 'snow',
                   icon: 'location',
                   children: []
                 }

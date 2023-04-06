@@ -5,6 +5,7 @@
 </template>
 
 <script setup lang="ts">
+import { stringLiteral } from '@babel/types'
 import { ref } from 'vue'
 
 /* 交叉类型 */
@@ -101,8 +102,23 @@ type UType = string | number
 type MyExclude<M, N> = M extends N ? never : M
 type UType1 = MyExclude<UType, string>
 
-type A2 = 'x' | 'y' extends 'x' ? string : number; // string | number
+type A2 = 'x' | 'y' extends 'x' ? string : number // string | number
 /* extends */
+
+/* 排除null undefined */
+type NonNullable<T> = T extends null | undefined ? never : T
+type E = NonNullable<string | null | number>
+/* 排除null undefined */
+
+/* 所有属性边可选 */
+type Partial<T> = { [P in keyof T]?: T[P] }
+interface Person {
+  a: string
+  b: number
+}
+type Per = Partial<Person>
+let per: Per = {}
+/* 所有属性边可选 */
 </script>
 
 <style lang="scss" scoped></style>

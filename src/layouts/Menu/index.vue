@@ -5,12 +5,12 @@
       <!--        测试-->
       <!--      </div>-->
       <el-menu
-          default-active="/vue3/transition/animation"
-          class="menu-bar"
-          router
-          unique-opened
-          @open="handleOpen"
-          @close="handleClose"
+        default-active="/vue3/transition/animation"
+        class="menu-bar"
+        router
+        unique-opened
+        @open="handleOpen"
+        @close="handleClose"
       >
         <sidebar-menu :menuList="menuList"></sidebar-menu>
       </el-menu>
@@ -33,6 +33,12 @@ import SidebarMenu from '@/components/menu/sidebarMenu.vue'
 const { menuList } = storeToRefs(useMenuStore())
 console.log(menuList)
 
+const handleOpen = () => {
+  console.log('open')
+}
+const handleClose = () => {
+  console.log('close')
+}
 </script>
 
 <style lang="scss" scoped>

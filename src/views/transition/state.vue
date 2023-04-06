@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input step="20" v-model="numObj.inputNum" type="number"/>
+    <input step="20" v-model="numObj.inputNum" type="number" />
     <div>{{ numObj.realNum.toFixed(0) }}</div>
   </div>
 </template>
@@ -19,15 +19,15 @@ const numObj: numObjType = reactive({
   realNum: 0
 })
 // 监听输入，过渡显示
-watch(() => numObj.inputNum, (newValue, oldValue) => {
-  proxy?.$gsap.to(numObj, {
-    duration: 1,
-    realNum: newValue
-  })
-})
-
+watch(
+  () => numObj.inputNum,
+  (newValue, oldValue) => {
+    proxy?.$gsap.to(numObj, {
+      duration: 1,
+      realNum: newValue
+    })
+  }
+)
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

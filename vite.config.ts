@@ -1,11 +1,12 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsxPlugin from '@vitejs/plugin-vue-jsx'
+import cesium from 'vite-plugin-cesium'
 import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueJsxPlugin()],
+  plugins: [vue(), vueJsxPlugin(), cesium()],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),

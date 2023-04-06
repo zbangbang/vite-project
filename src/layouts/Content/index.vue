@@ -10,7 +10,7 @@
 .content {
   flex: 1;
 
-  padding: 10px;
+  margin: 10px;
 
   position: relative;
 }

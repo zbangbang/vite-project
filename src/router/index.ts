@@ -103,6 +103,28 @@ const routes: RouteRecordRaw[] = [
         ]
       }
     ]
+  },
+  {
+    path: '/cesium',
+    children: [
+      {
+        path: 'weather',
+        children: [
+          {
+            path: 'fog',
+            component: () => import('@/views/cesium/weather/fog.vue')
+          },
+          {
+            path: 'rain',
+            component: () => import('@/views/cesium/weather/rain.vue')
+          },
+          {
+            path: 'snow',
+            component: () => import('@/views/cesium/weather/snow.vue')
+          }
+        ]
+      }
+    ]
   }
 ]
 

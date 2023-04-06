@@ -9,9 +9,9 @@ import directives from '@/directives/index'
 import 'normalize.css'
 import './styles/index.scss'
 import 'animate.css'
-import { gsap } from 'gsap'
+// 全局变量
+import globalProperties from '@/utils/globalProperties'
 
-import * as lodash from 'lodash'
 // 扩展提示
 import '@/types/index'
 // 创建实例
@@ -22,10 +22,8 @@ const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
+app.provide('test', null)
 // 插件
-app.use(ElementPlus).use(createPinia()).use(router).use(directives)
-// 全局变量
-app.config.globalProperties.$gsap = gsap
-app.config.globalProperties.$lodash = lodash
+app.use(ElementPlus).use(createPinia()).use(router).use(directives).use(globalProperties)
 
 app.mount('#app')
