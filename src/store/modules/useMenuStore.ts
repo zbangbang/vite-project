@@ -7,7 +7,7 @@ const useMenuStore = defineStore('menu', {
       menuList: [
         {
           path: '/ts',
-          id: '2',
+          id: '1',
           flag: false,
           name: 'ts',
           type: 'ts',
@@ -15,17 +15,26 @@ const useMenuStore = defineStore('menu', {
           children: [
             {
               path: '/ts/type',
-              id: '2-1',
+              id: '1-1',
               flag: false,
               name: '类型',
               type: 'type',
               icon: 'location',
               children: [
                 {
-                  path: '/ts/type/infer',
-                  id: '2-1-1',
+                  path: '/ts/type/extends',
+                  id: '1-1-1',
                   flag: false,
-                  name: '交叉类型',
+                  name: 'extends',
+                  type: 'extends',
+                  icon: 'location',
+                  children: []
+                },
+                {
+                  path: '/ts/type/infer',
+                  id: '1-1-2',
+                  flag: false,
+                  name: '推断',
                   type: 'infer',
                   icon: 'location',
                   children: []
@@ -36,7 +45,7 @@ const useMenuStore = defineStore('menu', {
         },
         {
           path: '/vue3',
-          id: '1',
+          id: '2',
           flag: false,
           name: 'Vue3',
           type: 'vue',
@@ -44,7 +53,7 @@ const useMenuStore = defineStore('menu', {
           children: [
             {
               path: '/vue3/transition',
-              id: '1-1',
+              id: '2-1',
               flag: false,
               name: '过渡',
               type: 'transition',
@@ -52,7 +61,7 @@ const useMenuStore = defineStore('menu', {
               children: [
                 {
                   path: '/vue3/transition/animation',
-                  id: '1-1-1',
+                  id: '2-1-1',
                   flag: false,
                   name: '使用animation.css',
                   type: 'animation',
@@ -61,7 +70,7 @@ const useMenuStore = defineStore('menu', {
                 },
                 {
                   path: '/vue3/transition/fade',
-                  id: '1-1-2',
+                  id: '2-1-2',
                   flag: false,
                   name: '使用过渡事件',
                   type: 'fade',
@@ -70,7 +79,7 @@ const useMenuStore = defineStore('menu', {
                 },
                 {
                   path: '/vue3/transition/group',
-                  id: '1-1-3',
+                  id: '2-1-3',
                   flag: false,
                   name: '过渡组',
                   type: 'group',
@@ -79,7 +88,7 @@ const useMenuStore = defineStore('menu', {
                 },
                 {
                   path: '/vue3/transition/state',
-                  id: '1-1-4',
+                  id: '2-1-4',
                   flag: false,
                   name: '过渡状态',
                   type: 'state',
@@ -88,7 +97,7 @@ const useMenuStore = defineStore('menu', {
                 },
                 {
                   path: '/vue3/transition/provide',
-                  id: '1-1-5',
+                  id: '2-1-5',
                   flag: false,
                   name: 'provide-inject',
                   type: 'provide',
@@ -99,7 +108,7 @@ const useMenuStore = defineStore('menu', {
             },
             {
               path: '/vue3/props',
-              id: '1-2',
+              id: '2-2',
               flag: false,
               name: '父子组件',
               type: 'props',
@@ -107,7 +116,7 @@ const useMenuStore = defineStore('menu', {
               children: [
                 {
                   path: '/vue3/props/provide',
-                  id: '1-2-1',
+                  id: '2-2-1',
                   flag: false,
                   name: 'provide-inject',
                   type: 'provide',
@@ -118,7 +127,7 @@ const useMenuStore = defineStore('menu', {
             },
             {
               path: '/vue3/directive',
-              id: '1-2',
+              id: '2-3',
               flag: false,
               name: '自定义指令',
               type: 'directive',
@@ -126,7 +135,7 @@ const useMenuStore = defineStore('menu', {
               children: [
                 {
                   path: '/vue3/directive/drag',
-                  id: '1-2-1',
+                  id: '2-3-1',
                   flag: false,
                   name: '拖拽',
                   type: 'drag',
@@ -204,6 +213,34 @@ const useMenuStore = defineStore('menu', {
                   flag: false,
                   name: '雪',
                   type: 'snow',
+                  icon: 'location',
+                  children: []
+                }
+              ]
+            }
+          ]
+        }, {
+          path: '/konva',
+          id: '5',
+          flag: false,
+          name: 'konva',
+          type: 'konva',
+          icon: 'bicycle',
+          children: [
+            {
+              path: '/konva/wcs',
+              id: '5-1',
+              flag: false,
+              name: 'wcs测试',
+              type: 'wcs',
+              icon: 'location',
+              children: [
+                {
+                  path: '/konva/wcs/group',
+                  id: '5-1-1',
+                  flag: false,
+                  name: '分组',
+                  type: 'group',
                   icon: 'location',
                   children: []
                 }

@@ -11,6 +11,33 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/index.vue')
   },
   {
+    path: '/ts',
+    children: [
+      {
+        path: 'type',
+        children: [
+          {
+            path: 'extends',
+            component: () => import('@/views/ts/type/index.vue')
+          },
+          {
+            path: 'infer',
+            component: () => import('@/views/ts/infer/index.vue')
+          }
+        ]
+      },
+      {
+        path: 'props',
+        children: [
+          {
+            path: 'provide',
+            component: () => import('@/views/props/index.vue')
+          }
+        ]
+      }
+    ]
+  },
+  {
     path: '/vue3',
     children: [
       {
@@ -59,29 +86,6 @@ const routes: RouteRecordRaw[] = [
     ]
   },
   {
-    path: '/ts',
-    children: [
-      {
-        path: 'type',
-        children: [
-          {
-            path: 'infer',
-            component: () => import('@/views/ts/type/index.vue')
-          }
-        ]
-      },
-      {
-        path: 'props',
-        children: [
-          {
-            path: 'provide',
-            component: () => import('@/views/props/index.vue')
-          }
-        ]
-      }
-    ]
-  },
-  {
     path: '/echarts',
     children: [
       {
@@ -121,6 +125,20 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'snow',
             component: () => import('@/views/cesium/weather/snow.vue')
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/konva',
+    children: [
+      {
+        path: 'wcs',
+        children: [
+          {
+            path: 'group',
+            component: () => import('@/views/konva/wcs/group.vue')
           }
         ]
       }

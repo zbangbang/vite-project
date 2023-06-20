@@ -15,6 +15,7 @@
     "echarts": "^5.4.1",
     "element-plus": "^2.2.28",
     "gsap": "^3.11.4",
+    "konva": "^8.4.3",
     "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
     "pinia": "^2.0.29",
