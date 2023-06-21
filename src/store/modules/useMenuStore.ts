@@ -215,6 +215,15 @@ const useMenuStore = defineStore('menu', {
                   type: 'snow',
                   icon: 'location',
                   children: []
+                },
+                {
+                  path: '/cesium/command/index',
+                  id: '4-1-4',
+                  flag: false,
+                  name: 'command',
+                  type: 'command',
+                  icon: 'location',
+                  children: []
                 }
               ]
             }

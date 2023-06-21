@@ -125,6 +125,10 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'snow',
             component: () => import('@/views/cesium/weather/snow.vue')
+          },
+          {
+            path: 'command',
+            component: () => import('@/views/cesium/command/index.vue')
           }
         ]
       }
