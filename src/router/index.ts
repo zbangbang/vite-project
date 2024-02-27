@@ -147,6 +147,20 @@ const routes: RouteRecordRaw[] = [
         ]
       }
     ]
+  },
+  {
+    path: '/webgl',
+    children: [
+      {
+        path: 'p1',
+        children: [
+          {
+            path: 'l1',
+            component: () => import('@/views/webgl/lesson1/index.vue')
+          }
+        ]
+      }
+    ]
   }
 ]
 

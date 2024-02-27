@@ -1,69 +1,68 @@
 <template>
-  <div>类型</div>
-  <div>交叉类型：{{ p }}</div>
-  <div>Pick：（联合类型约束）{{ user }}</div>
+	<div>类型</div>
+	<div>交叉类型：{{ p }}</div>
+	<div>Pick：（联合类型约束）{{ user }}</div>
 </template>
 
 <script setup lang="ts">
-import { stringLiteral } from '@babel/types'
 import { ref } from 'vue'
 
 /* 交叉类型 */
 type Minix<M, N> = M & N
 
 interface IPeople {
-  name: string
-  age: number
+	name: string
+	age: number
 }
 
 interface ITeacher {
-  major: string
-  grade: string
+	major: string
+	grade: string
 }
 
 interface IStudent {
-  class: string
+	class: string
 }
 
 type MinixPeople<T> = Minix<IPeople, T>
 
 interface IPeopleConfig {
-  teacher: MinixPeople<ITeacher>
-  student: MinixPeople<IStudent>
+	teacher: MinixPeople<ITeacher>
+	student: MinixPeople<IStudent>
 }
 
 let p = ref<IPeopleConfig>()
 p.value = {
-  student: {
-    name: '1',
-    age: 18,
-    class: '班级一'
-  },
-  teacher: {
-    name: 't1',
-    age: 30,
-    major: '语文',
-    grade: '7年级'
-  }
+	student: {
+		name: '1',
+		age: 18,
+		class: '班级一',
+	},
+	teacher: {
+		name: 't1',
+		age: 30,
+		major: '语文',
+		grade: '7年级',
+	},
 }
 /* 交叉类型 */
 
 /* 模拟pick，联合类型约束 */
 interface IUser {
-  name: string
-  age: number
-  weight: string
+	name: string
+	age: number
+	weight: string
 }
 
 type MyPick<T, K extends keyof T> = {
-  [S in K]: T[K]
+	[S in K]: T[K]
 }
 
 type User = Pick<IUser, 'name' | 'age'>
 
 let user = ref<User>({
-  name: 'zzz',
-  age: 16
+	name: 'zzz',
+	age: 16,
 })
 
 /* 模拟pick，联合类型约束 */
@@ -75,12 +74,12 @@ let user = ref<User>({
 
 // ==> 参考  T extends Lengthwise  的理解
 interface Lengthwise {
-  length: number
+	length: number
 }
 
 function loggingIdentity<T extends Lengthwise>(arg: T): T {
-  console.log(arg.length)
-  return arg
+	console.log(arg.length)
+	return arg
 }
 
 // <== 参考  T extends Lengthwise  的理解
@@ -113,8 +112,8 @@ type E = NonNullable<string | null | number>
 /* 所有属性边可选 */
 type Partial<T> = { [P in keyof T]?: T[P] }
 interface Person {
-  a: string
-  b: number
+	a: string
+	b: number
 }
 type Per = Partial<Person>
 let per: Per = {}

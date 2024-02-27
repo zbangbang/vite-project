@@ -3,10 +3,14 @@ import vue from '@vitejs/plugin-vue'
 import vueJsxPlugin from '@vitejs/plugin-vue-jsx'
 import cesium from 'vite-plugin-cesium'
 import { resolve } from 'path'
+import UnoCSS from 'unocss/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueJsxPlugin(), cesium()],
+  plugins: [vue(), vueJsxPlugin(), cesium(), UnoCSS()],
+  server: {
+    port: 5900
+  },
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),

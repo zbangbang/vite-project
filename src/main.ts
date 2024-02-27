@@ -9,6 +9,7 @@ import directives from '@/directives/index'
 import 'normalize.css'
 import './styles/index.scss'
 import 'animate.css'
+import 'virtual:uno.css'
 // 全局变量
 import globalProperties from '@/utils/globalProperties'
 
