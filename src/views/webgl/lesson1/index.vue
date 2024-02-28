@@ -12,6 +12,7 @@
 		</div>
 		<canvas class="right_content" id="webgl-canvas"></canvas>
 		<SliderVue
+			v-if="activeBtnType === BtnType.Trangle"
 			class="absolute right-6 top-16 w-100"
 			v-model:x="xValue"
 			:x-range="xRange"
@@ -23,6 +24,21 @@
 			v-model:sy="yScale"
 			:sy-range="syRange"
 		></SliderVue>
+		<el-select
+			v-if="activeBtnType === BtnType.TexCoord"
+			v-model="kernelsType"
+			class="absolute right-6 top-16"
+			placeholder="选择卷积内核"
+			style="width: 240px"
+			@change="changeKernels"
+		>
+			<el-option
+				v-for="item in kernelsList"
+				:key="item.type"
+				:label="item.type"
+				:value="item.type"
+			/>
+		</el-select>
 	</div>
 </template>
 
@@ -31,30 +47,41 @@ import { ref, watch } from 'vue'
 import { TrangleShader, PixelTrangleShader } from '@/shader/glNew'
 import { TexCoordShader } from '@/shader/glTex'
 import useWebGL from '@/hooks/useWebGL/index'
+import useTexCoord from '@/hooks/webgl/lesson1/useTexCoord'
 import texImg from '@/assets/images/tex.png'
 import SliderVue from '@/components/slider/index.vue'
 import { onMounted } from 'vue'
+import { kernelsList } from './config'
 
 const { initShaders, gl } = useWebGL('webgl-canvas')
 
+let program: WebGLProgram | null = null
+let texCoordHook: any
+
+enum BtnType {
+	Trangle,
+	PixelTrangle,
+	TexCoord,
+}
 const glBtnList = ref([
 	{
 		label: '三角形',
-		value: 'Trangle',
+		value: BtnType.Trangle,
 		active: false,
 	},
 	{
 		label: '三角形(像素位置)',
-		value: 'PixelTrangle',
+		value: BtnType.PixelTrangle,
 		active: false,
 	},
 	{
 		label: '材质',
-		value: 'TexCoord',
+		value: BtnType.TexCoord,
 		active: false,
 	},
 ])
 
+const activeBtnType = ref<BtnType>()
 // 选择按钮
 const chooseDrawItem = (item: any, index: number) => {
 	clearAll()
@@ -64,17 +91,26 @@ const chooseDrawItem = (item: any, index: number) => {
 	} else {
 		glBtnList.value.forEach((btn) => (btn.active = false))
 		item.active = true
+		activeBtnType.value = item.value
 	}
 
 	switch (item.value) {
-		case 'Trangle':
+		case BtnType.Trangle:
 			drawTrangle()
 			break
-		case 'PixelTrangle':
+		case BtnType.PixelTrangle:
 			drawPixelTrangle()
 			break
-		case 'TexCoord':
-			drawTexCoord()
+		case BtnType.TexCoord:
+			program = initShaders(
+				gl.value!,
+				TexCoordShader.vertexShaderSource,
+				TexCoordShader.fragmentShaderSource
+			)!
+
+			texCoordHook = useTexCoord(gl.value!, program, texImg)
+			const kernel = kernelsList.find((item) => item.type === kernelsType.value)
+			texCoordHook.drawTexCoord(kernel?.value!)
 			break
 
 		default:
@@ -114,11 +150,9 @@ watch(
 	}
 )
 
-let u_Matrix: any = null
-let a_Position: any = null
 // 绘制三角形
 const drawTrangle = () => {
-	let program = initShaders(
+	program = initShaders(
 		gl.value!,
 		TrangleShader.vertexShaderSource,
 		TrangleShader.fragmentShaderSource
@@ -136,7 +170,7 @@ const drawTrangle = () => {
 	matrix = m3.translate(matrix, xValue.value, yValue.value)
 	matrix = m3.rotate(matrix, (rotate.value / 180) * Math.PI)
 	matrix = m3.scale(matrix, xScale.value, yScale.value)
-	u_Matrix = gl.value!.getUniformLocation(program, 'u_Matrix')
+	let u_Matrix = gl.value!.getUniformLocation(program, 'u_Matrix')
 	gl.value!.uniformMatrix3fv(u_Matrix, false, matrix)
 
 	let a_Color = gl.value!.getAttribLocation(program, 'a_Color')
@@ -153,7 +187,7 @@ const drawTrangle = () => {
 	)
 	gl.value!.enableVertexAttribArray(a_Color)
 
-	a_Position = gl.value!.getAttribLocation(program, 'a_Position')
+	let a_Position = gl.value!.getAttribLocation(program, 'a_Position')
 	let posBuffer = gl.value!.createBuffer()
 	gl.value!.bindBuffer(gl.value!.ARRAY_BUFFER, posBuffer)
 	gl.value!.bufferData(gl.value!.ARRAY_BUFFER, posArr, gl.value!.STATIC_DRAW)
@@ -184,6 +218,7 @@ const reDrawTrangle = () => {
 	matrix = m3.translate(matrix, xValue.value, yValue.value)
 	matrix = m3.rotate(matrix, (rotate.value / 180) * Math.PI)
 	matrix = m3.scale(matrix, xScale.value, yScale.value)
+	let u_Matrix = gl.value!.getUniformLocation(program!, 'u_Matrix')
 	gl.value!.uniformMatrix3fv(u_Matrix, false, matrix)
 
 	gl.value!.clearColor(0, 0, 0, 0)
@@ -197,7 +232,7 @@ const reDrawTrangle = () => {
  * @return {*}
  */
 const drawPixelTrangle = () => {
-	let program = initShaders(
+	program = initShaders(
 		gl.value!,
 		PixelTrangleShader.vertexShaderSource,
 		PixelTrangleShader.fragmentShaderSource
@@ -226,89 +261,11 @@ const drawPixelTrangle = () => {
 	gl.value!.drawArrays(gl.value!.TRIANGLES, 0, 6)
 }
 
-// 材质
-const drawTexCoord = () => {
-	let program = initShaders(
-		gl.value!,
-		TexCoordShader.vertexShaderSource,
-		TexCoordShader.fragmentShaderSource
-	)!
-
-	let a_Position = gl.value!.getAttribLocation(program, 'a_Position')
-	let verticesSizes = new Float32Array([
-		//四个顶点的位置和纹理数据
-		// -0.5, 0.5, -0.3, 1.7, -0.5, -0.5, -0.3, -0.2, 0.5, 0.5, 1.7, 1.7, 0.5, -0.5,
-		// 1.7, -0.2,
-		-0.5, 0.5, 0.0, 1.0, -0.5, -0.5, 0.0, 0.0, 0.5, 0.5, 1.0, 1.0, 0.5, -0.5,
-		1.0, 0.0,
-	])
-
-	let vertexSizeBuffer = gl.value!.createBuffer()
-	gl.value!.bindBuffer(gl.value!.ARRAY_BUFFER, vertexSizeBuffer)
-	gl.value!.bufferData(
-		gl.value!.ARRAY_BUFFER,
-		verticesSizes,
-		gl.value!.STATIC_DRAW
-	)
-	let FSIZE = verticesSizes.BYTES_PER_ELEMENT
-	gl.value!.vertexAttribPointer(
-		a_Position,
-		2,
-		gl.value!.FLOAT,
-		false,
-		FSIZE * 4,
-		0
-	)
-	gl.value!.enableVertexAttribArray(a_Position)
-
-	// 纹理
-	let a_TexCoord = gl.value!.getAttribLocation(program, 'a_TexCoord')
-	gl.value!.vertexAttribPointer(
-		a_TexCoord,
-		2,
-		gl.value!.FLOAT,
-		false,
-		FSIZE * 4,
-		FSIZE * 2
-	)
-	gl.value!.enableVertexAttribArray(a_TexCoord)
-
-	initTexture(gl.value!, program)
-}
-
-const initTexture = (gl: WebGLRenderingContext, program: WebGLProgram) => {
-	let image = new Image()
-	image.src = texImg
-	image.onload = () => {
-		loadTexture(gl, program, image)
-	}
-}
-const loadTexture = (
-	gl: WebGLRenderingContext,
-	program: WebGLProgram,
-	image: HTMLImageElement
-) => {
-	const u_TextureSize = gl.getUniformLocation(program, 'u_TextureSize')
-	gl.uniform2f(u_TextureSize, image.width, image.height)
-
-	let texture: WebGLTexture = gl.createTexture()!
-	let u_Sampler = gl.getUniformLocation(program, 'u_Sampler')
-	// y轴反转，图片坐标系和gl坐标系不同
-	gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1)
-	// 开启0号纹理单元
-	gl.activeTexture(gl.TEXTURE0)
-	//绑定纹理数据
-	gl.bindTexture(gl.TEXTURE_2D, texture)
-	// 配置纹理参数
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-	// 配置纹理图像
-	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
-	// 将0号纹理传递给着色器
-	gl.uniform1i(u_Sampler, 0)
-
-	gl.clearColor(0.0, 0.0, 0.0, 1.0)
-	gl.clear(gl.COLOR_BUFFER_BIT)
-	gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
+// 选择的类型
+const kernelsType = ref('normal')
+const changeKernels = () => {
+	const kernel = kernelsList.find((item) => item.type === kernelsType.value)
+	texCoordHook.reDrawTexCoord(kernel?.value!)
 }
 </script>
 
