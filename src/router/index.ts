@@ -157,6 +157,10 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'l1',
             component: () => import('@/views/webgl/lesson1/index.vue')
+          },
+          {
+            path: 'l2',
+            component: () => import('@/views/webgl/lesson2/index.vue')
           }
         ]
       }

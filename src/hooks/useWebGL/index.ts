@@ -44,6 +44,9 @@ export default function useWebGL(domId: string) {
     //使用program
     gl.useProgram(program)
 
+    gl.enable(gl.CULL_FACE)
+    gl.enable(gl.DEPTH_TEST)
+
     // 纠正canvas画布的宽高
     webglUtils.resizeCanvasToDisplaySize(gl.canvas);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
