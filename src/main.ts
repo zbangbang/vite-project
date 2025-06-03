@@ -10,6 +10,7 @@ import 'normalize.css'
 import './styles/index.scss'
 import 'animate.css'
 import 'virtual:uno.css'
+import '@z/mapbox-z/dist/style.css'
 // 全局变量
 import globalProperties from '@/utils/globalProperties'
 

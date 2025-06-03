@@ -275,7 +275,7 @@ export default function useThreeHook(gl: WebGLRenderingContext, program: WebGLPr
     let zNear = 1
     let zFar = 2000
     let matrix = m4.perspective(
-      60,
+      (60 / 180) * Math.PI,
       aspect,
       zNear,
       zFar
@@ -329,6 +329,8 @@ export default function useThreeHook(gl: WebGLRenderingContext, program: WebGLPr
     //   400,
     //   -400
     // )
+
+    console.log(threeHookParams.xValue, threeHookParams.yValue, threeHookParams.zValue)
 
     // 透视投影
     let aspect = (gl!.canvas as HTMLCanvasElement).clientWidth / (gl!.canvas as HTMLCanvasElement).clientHeight

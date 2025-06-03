@@ -131,6 +131,18 @@ const routes: RouteRecordRaw[] = [
             component: () => import('@/views/cesium/command/index.vue')
           }
         ]
+      },
+      {
+        path: 'command',
+        component: () => import('@/views/cesium/command/index.vue')
+      },
+      {
+        path: 'demo',
+        component: () => import('@/views/cesium/demo/index.vue')
+      },
+      {
+        path: 'cesium-s',
+        component: () => import('@/views/cesium/cesium-s/index.vue')
       }
     ]
   },
@@ -163,6 +175,46 @@ const routes: RouteRecordRaw[] = [
             component: () => import('@/views/webgl/lesson2/index.vue')
           }
         ]
+      }
+    ]
+  },
+  {
+    path: '/openlayers',
+    children: [
+      {
+        path: 'p1',
+        children: [
+          {
+            path: 'line',
+            component: () => import('@/views/openlayers/p1/line.vue')
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/fabric',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/fabric/index.vue')
+      }
+    ]
+  },
+  {
+    path: '/mapbox',
+    children: [
+      {
+        path: 'customLayer',
+        component: () => import('@/views/mapbox/custom/customLayer.vue')
+      },
+      {
+        path: 'marker',
+        component: () => import('@/views/mapbox/marker/index.vue')
+      },
+      {
+        path: 'layer',
+        component: () => import('@/views/mapbox/layer/index.vue')
       }
     ]
   }

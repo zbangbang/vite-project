@@ -5,7 +5,7 @@
 			<!--        测试-->
 			<!--      </div>-->
 			<el-menu
-				default-active="/vue3/transition/animation"
+				:default-active="activePath"
 				class="menu-bar"
 				router
 				unique-opened
@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import {
 	Document,
 	Menu as IconMenu,
@@ -29,6 +29,9 @@ import {
 import { useMenuStore } from '@/store/index'
 import { storeToRefs } from 'pinia'
 import SidebarMenu from '@/components/menu/sidebarMenu.vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 
 const useMenu = useMenuStore()
 const { menuList } = storeToRefs(useMenu)
@@ -42,6 +45,14 @@ const handleOpen = () => {
 const handleClose = () => {
 	console.log('close')
 }
+
+const activePath = ref('')
+watch(
+	() => route.path,
+	(path) => {
+		activePath.value = path
+	}
+)
 </script>
 
 <style lang="scss" scoped>

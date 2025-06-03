@@ -28,21 +28,19 @@
 			v-model:sy="threeHookParams.yScale"
 			:sy-range="threeHookParams.syRange"
 		></SliderVue>
-		<el-select
-			v-if="activeBtnType === BtnType.TexCoord"
-			v-model="kernelsType"
-			class="absolute right-6 top-16"
-			placeholder="选择卷积内核"
-			style="width: 240px"
-			@change="changeKernels"
+		<div
+			v-if="activeBtnType === BtnType.Camera"
+			class="absolute right-6 top-16 w-100 flex items-center"
 		>
-			<el-option
-				v-for="item in kernelsList"
-				:key="item.type"
-				:label="item.type"
-				:value="item.type"
+			<span class="inline-block w-24">相机角度</span>
+			<el-slider
+				v-model="cameraAngle"
+				:min="-360"
+				:max="360"
+				show-input
+				size="small"
 			/>
-		</el-select>
+		</div>
 	</div>
 </template>
 
@@ -57,38 +55,13 @@ import useThreeHook from '@/hooks/webgl/lesson2/useThree'
 import texImg from '@/assets/images/tex.png'
 import SliderVue from '@/components/slider/sliderOne.vue'
 import { onMounted } from 'vue'
-import { kernelsList } from './config'
+import { BtnType } from './config'
 import { IThreeParam } from '@/hooks/webgl/lesson2/types'
 import { toRefs } from 'vue'
+import useCamera from '@/hooks/webgl/lesson2/useCamera'
 
 const { initShaders, gl } = useWebGL('webgl-canvas')
 
-let program: WebGLProgram | null = null
-let texCoordHook: any
-let threeHook: any
-const threeHookParams = ref<IThreeParam>({
-	xValue: 175,
-	xRange: [-1000, 1000],
-	yValue: 100,
-	yRange: [-1000, 1000],
-	zValue: -200,
-	zRange: [-1000, 1000],
-	xRotate: 0,
-	yRotate: 0,
-	zRotate: 0,
-	rRange: [0, 360],
-	xScale: 1,
-	sxRange: [0, 5],
-	yScale: 1,
-	syRange: [0, 5],
-	zScale: 1,
-})
-
-enum BtnType {
-	Three,
-	PixelTrangle,
-	TexCoord,
-}
 const glBtnList = ref([
 	{
 		label: '3D',
@@ -96,8 +69,8 @@ const glBtnList = ref([
 		active: false,
 	},
 	{
-		label: '材质',
-		value: BtnType.TexCoord,
+		label: '相机',
+		value: BtnType.Camera,
 		active: false,
 	},
 ])
@@ -134,16 +107,16 @@ const chooseDrawItem = (item: any, index: number) => {
 			threeHook = useThreeHook(gl.value!, program)
 			threeHook.drawThree(threeHookParams.value)
 			break
-		case BtnType.TexCoord:
+		case BtnType.Camera:
 			program = initShaders(
 				gl.value!,
-				TexCoordShader.vertexShaderSource,
-				TexCoordShader.fragmentShaderSource
+				ThreeShader.vertexShaderSource,
+				ThreeShader.fragmentShaderSource
 			)!
 
-			texCoordHook = useTexCoord(gl.value!, program, texImg)
-			const kernel = kernelsList.find((item) => item.type === kernelsType.value)
-			texCoordHook.drawTexCoord(kernel?.value!)
+			threeHook = useCamera(gl.value!, program)
+			threeHook.drawThree(cameraAngle.value)
+
 			break
 
 		default:
@@ -155,6 +128,27 @@ const clearAll = () => {
 	gl.value!.clear(gl.value!.COLOR_BUFFER_BIT)
 }
 
+// 3D
+let program: WebGLProgram | null = null
+let threeHook: any
+const threeHookParams = ref<IThreeParam>({
+	xValue: 175,
+	xRange: [-1000, 1000],
+	yValue: 100,
+	yRange: [-1000, 1000],
+	zValue: -200,
+	zRange: [-1000, 1000],
+	xRotate: 0,
+	yRotate: 0,
+	zRotate: 0,
+	rRange: [0, 360],
+	xScale: 1,
+	sxRange: [0, 5],
+	yScale: 1,
+	syRange: [0, 5],
+	zScale: 1,
+})
+
 watch(
 	() => threeHookParams.value,
 	(threeHookParams) => {
@@ -165,12 +159,7 @@ watch(
 	}
 )
 
-// 选择的类型
-const kernelsType = ref('normal')
-const changeKernels = () => {
-	const kernel = kernelsList.find((item) => item.type === kernelsType.value)
-	texCoordHook.reDrawTexCoord(kernel?.value!)
-}
+const cameraAngle = ref(0)
 </script>
 
 <style lang="scss" scoped>

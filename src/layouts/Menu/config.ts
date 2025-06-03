@@ -83,6 +83,15 @@ export const menuList: IMenuItem[] = [
         name: 'index',
         icon: 'location'
       }]
+    }, {
+      name: 'command',
+      icon: 'location'
+    }, {
+      name: 'demo',
+      icon: 'location'
+    }, {
+      name: 'cesium-s',
+      icon: 'location'
     }]
   }, {
     name: 'konva',
@@ -108,6 +117,37 @@ export const menuList: IMenuItem[] = [
         name: 'l2',
         icon: 'location'
       }]
+    }]
+  }, {
+    name: 'openlayers',
+    icon: 'bicycle',
+    children: [{
+      name: 'p1',
+      icon: 'location',
+      children: [{
+        name: 'line',
+        icon: 'location'
+      }]
+    }]
+  }, {
+    name: 'fabric',
+    icon: 'bicycle',
+    children: [{
+      name: 'index',
+      icon: 'location'
+    }]
+  }, {
+    name: 'mapbox',
+    icon: 'bicycle',
+    children: [{
+      name: 'customLayer',
+      icon: 'location'
+    }, {
+      name: 'marker',
+      icon: 'location'
+    }, {
+      name: 'layer',
+      icon: 'location'
     }]
   }
 ]
