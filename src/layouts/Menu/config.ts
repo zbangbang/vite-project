@@ -149,5 +149,12 @@ export const menuList: IMenuItem[] = [
       name: 'layer',
       icon: 'location'
     }]
+  }, {
+    name: 'maptest',
+    icon: 'bicycle',
+    children: [{
+      name: 'initMap',
+      icon: 'location'
+    }]
   }
 ]

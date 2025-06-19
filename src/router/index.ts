@@ -5,7 +5,7 @@ import {
   RouteRecordRaw
 } from 'vue-router'
 
-const routes: RouteRecordRaw[] = [
+export const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('@/views/index.vue')
@@ -215,6 +215,15 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'layer',
         component: () => import('@/views/mapbox/layer/index.vue')
+      }
+    ]
+  },
+  {
+    path: '/maptest',
+    children: [
+      {
+        path: 'initMap',
+        component: () => import('@/views/maptest/initMap/index.vue')
       }
     ]
   }
