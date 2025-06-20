@@ -224,6 +224,10 @@ export const routes: RouteRecordRaw[] = [
       {
         path: 'initMap',
         component: () => import('@/views/maptest/initMap/index.vue')
+      },
+      {
+        path: 'polarMap',
+        component: () => import('@/views/maptest/polarMap/index.vue')
       }
     ]
   }

@@ -155,6 +155,9 @@ export const menuList: IMenuItem[] = [
     children: [{
       name: 'initMap',
       icon: 'location'
+    }, {
+      name: 'polarMap',
+      icon: 'location'
     }]
   }
 ]
