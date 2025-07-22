@@ -1,12 +1,13 @@
 <template>
 	<div class="w-full h-full flex">
 		<!-- <InitMap></InitMap> -->
-		<GridLayer></GridLayer>
-		<WindLayer></WindLayer>
+		<!-- <GridLayer></GridLayer> -->
+		<!-- <WindLayer></WindLayer> -->
 		<!-- <WindCanvasLayer></WindCanvasLayer> -->
-		<WindPlume></WindPlume>
+		<!-- <WindPlume></WindPlume> -->
 		<!-- <FlowLayer></FlowLayer> -->
-		<Typhoon></Typhoon>
+		<!-- <Typhoon></Typhoon> -->
+		<Preview></Preview>
 	</div>
 </template>
 
@@ -19,6 +20,7 @@ import WindCanvasLayer from '@/components/mapbox/Wind/canvas.vue'
 import WindPlume from '@/components/mapbox/Wind/plume.vue'
 import FlowLayer from '@/components/mapbox/Wind/flow.vue'
 import Typhoon from '@/components/mapbox/Typhoon/index.vue'
+import Preview from '@/components/mapbox/preview/index.vue'
 </script>
 
 <style lang="scss" scoped></style>
