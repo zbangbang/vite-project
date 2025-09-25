@@ -173,6 +173,10 @@ export const routes: RouteRecordRaw[] = [
           {
             path: 'l2',
             component: () => import('@/views/webgl/lesson2/index.vue')
+          },
+          {
+            path: 'l3',
+            component: () => import('@/views/webgl/lesson3/index.vue')
           }
         ]
       }

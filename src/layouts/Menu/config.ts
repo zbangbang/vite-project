@@ -116,6 +116,9 @@ export const menuList: IMenuItem[] = [
       }, {
         name: 'l2',
         icon: 'location'
+      }, {
+        name: 'l3',
+        icon: 'location'
       }]
     }]
   }, {
