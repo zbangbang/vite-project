@@ -10,7 +10,8 @@ export enum BtnType {
   model,
   mouse,
   fog,
-  frameBuffer
+  frameBuffer,
+  stencil
 }
 
 export const cubePosition = [
@@ -472,6 +473,30 @@ export const FrameBufferShader = {
     varying vec2 v_texCoord;
     void main() {
       gl_FragColor = texture2D(u_sampler, v_texCoord);
+    }
+  `
+}
+
+/**
+ * 模板测试
+ * @remarks:
+ * @returns {*}
+ */
+export const StencilShader = {
+  vertexShaderSource: `
+    attribute vec3 a_position;
+    attribute vec4 a_color;
+    varying vec4 v_color;
+    void main() {
+      gl_Position = vec4(a_position, 1);
+      v_color = a_color;
+    }
+  `,
+  fragmentShaderSource: `
+    precision mediump float;
+    varying vec4 v_color;
+    void main() {
+      gl_FragColor = v_color;
     }
   `
 }

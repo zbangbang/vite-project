@@ -28,6 +28,7 @@ import { clearModel, initModel } from './model'
 import { clearMouse, initMouse } from './mouse'
 import { clearFog, initFog } from './fog'
 import { clearFrameBuffer, initFrameBuffer } from './frameBuffer'
+import { initStencilTest } from './stencil'
 twgl.setDefaults({ attribPrefix: 'a_' })
 
 const boxRef = ref()
@@ -41,6 +42,7 @@ onMounted(() => {
 		// alpha: false, // 禁用 alpha
 		// premultipliedAlpha: false,
 		// preserveDrawingBuffer: true, // 保证 readPixels 可读
+		stencil: true, // 开启模板测试
 	})
 
 	chooseDrawItem(glBtnList.value[glBtnList.value.length - 1])
@@ -90,6 +92,11 @@ const glBtnList = ref([
 	{
 		label: '渲染到纹理',
 		value: BtnType.frameBuffer,
+		active: false,
+	},
+	{
+		label: '模板测试',
+		value: BtnType.stencil,
 		active: false,
 	},
 ])
@@ -143,6 +150,10 @@ const chooseDrawItem = (item: any) => {
 		// 渲染到纹理
 		case BtnType.frameBuffer:
 			initFrameBuffer(gl)
+			break
+		// 模板测试
+		case BtnType.stencil:
+			initStencilTest(gl)
 			break
 
 		default:

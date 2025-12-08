@@ -8,6 +8,9 @@
 import { onMounted, ref, shallowRef } from 'vue'
 import mapboxgl from 'mapbox-gl'
 import { randomNum } from '@/utils'
+import MarkerLayer from './MarkerLayer'
+import stationJson from '@/assets/json/station.json'
+import { markerOptions } from './config'
 
 const smap = shallowRef<mapboxgl.Map>()
 const initMap = () => {
@@ -24,7 +27,8 @@ const initMap = () => {
 	smap.value.on('load', (ev) => {
 		// initOneMarker()
 		// initTwoMarker()
-		initThreeMarker()
+		// initThreeMarker()
+		initFourMarker()
 	})
 }
 onMounted(() => {
@@ -33,7 +37,7 @@ onMounted(() => {
 
 const initOneMarker = () => {
 	const id = 'one'
-	const demoFeatures: GeoJSON.Feature[] = Array(1000)
+	const demoFeatures: GeoJSON.Feature[] = Array(5000)
 		.fill(0)
 		.map((item, index) => {
 			return {
@@ -84,16 +88,16 @@ const initOneMarker = () => {
 		paint: {},
 	})
 
-	smap.value?.on('zoom', (e) => {
-		console.log(smap.value?.getZoom())
-		if (smap.value?.getZoom()! > 6) {
-			smap.value?.setLayoutProperty(
-				`${id}-text-layer`,
-				'text-allow-overlap',
-				true
-			)
-		}
-	})
+	// smap.value?.on('zoom', (e) => {
+	// 	console.log(smap.value?.getZoom())
+	// 	if (smap.value?.getZoom()! > 6) {
+	// 		smap.value?.setLayoutProperty(
+	// 			`${id}-text-layer`,
+	// 			'text-allow-overlap',
+	// 			true
+	// 		)
+	// 	}
+	// })
 }
 const initTwoMarker = () => {
 	const id = 'two'
@@ -246,6 +250,51 @@ const initThreeMarker = () => {
 	smap.value?.on('click', `${id}-text-layer`, (e) => {
 		console.log(e.features[0])
 	})
+}
+
+const initFourMarker = () => {
+	const demoFeatures: any[] = Array(50000)
+		.fill({})
+		.map((item, index) => {
+			return {
+				station_name: `station-${index}`,
+				station_id_c: index,
+				lat: randomNum(-45, 45),
+				lon: randomNum(0, 180),
+			}
+		})
+	demoFeatures.forEach((item, index) => {
+		if (index < 5000) {
+			item.stationType = 'liuliang'
+		} else if (index >= 5000 && index < 10000) {
+			item.stationType = 'water'
+		} else if (index >= 10000 && index < 15000) {
+			item.stationType = 'test'
+		} else {
+			item.stationType = 'circle'
+		}
+	})
+	stationJson.forEach((item, index) => {
+		if (index < 50) {
+			item.stationType = 'liuliang'
+			item.rotate = 30
+		} else if (index >= 50 && index < 100) {
+			item.stationType = 'water'
+		} else if (index >= 100 && index < 150) {
+			item.stationType = 'test'
+		} else {
+			item.stationType = 'circle'
+		}
+	})
+	const markerLayer = new MarkerLayer(smap.value, demoFeatures, markerOptions, {
+		overlap: true,
+		cluster: true,
+		clusterRadius: 0,
+	})
+
+	setTimeout(() => {
+		markerLayer.refresh(stationJson)
+	}, 5000)
 }
 </script>
 

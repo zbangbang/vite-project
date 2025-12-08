@@ -2,7 +2,7 @@
  * @FilePath: frameBuffer.ts
  * @Author: @zhangl
  * @Date: 2025-08-11 14:46:58
- * @LastEditTime: 2025-09-25 16:16:32
+ * @LastEditTime: 2025-11-21 15:07:08
  * @LastEditors: @zhangl
  * @Description: 渲染到纹理
  */
@@ -92,6 +92,7 @@ export const initFrameBuffer = (gl: WebGLRenderingContext) => {
     // @ts-ignore
     twgl.resizeCanvasToDisplaySize(gl.canvas)
     gl.enable(gl.DEPTH_TEST)
+    // gl.enable(gl.CULL_FACE)
     gl.useProgram(programInfo.program)
 
     twgl.bindFramebufferInfo(gl, fbo)
@@ -99,8 +100,6 @@ export const initFrameBuffer = (gl: WebGLRenderingContext) => {
     gl.clearColor(0.2, 0.2, 0.4, 1.0)
     gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
     fboMvpMatrix = twgl.m4.rotateY(fboMvpMatrix, angle * Math.PI / 180)
-    // angle += 0.01
-    // console.log(angle);
 
     const fboUniforms = {
       u_mvpMatrix: fboMvpMatrix,
@@ -116,9 +115,7 @@ export const initFrameBuffer = (gl: WebGLRenderingContext) => {
     gl.clearColor(0.0, 0.0, 0.0, 1.0)
     gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
 
-
     mvpMatrix = twgl.m4.rotateY(mvpMatrix, angle1 * Math.PI / 180)
-
     const uniforms = {
       u_mvpMatrix: mvpMatrix,
       u_sampler: fbo.attachments[0]
