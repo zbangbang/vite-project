@@ -1,6 +1,4 @@
 import { StencilShader } from './config'
-import testImg from '@/assets/images/tex.png'
-import testImg1 from '@/assets/images/typhoon/typhoon.png'
 import * as twgl from 'twgl.js'
 twgl.setDefaults({ attribPrefix: 'a_' })
 
@@ -59,11 +57,12 @@ export const initStencilTest = (gl: WebGLRenderingContext) => {
 
 
 
+    gl.disable(gl.STENCIL_TEST);
     // animate = requestAnimationFrame(render)
   }
   render()
 }
 
-export const clearTexture = () => {
+export const clearStencilTest = () => {
   cancelAnimationFrame(animate)
 }

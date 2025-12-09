@@ -57,10 +57,10 @@ export const menuList: IMenuItem[] = [
     name: 'echarts',
     icon: 'bicycle',
     children: [{
-      name: 'pie-chart',
+      name: 'pieChart',
       icon: 'location',
       children: [{
-        name: 'chart1',
+        name: 'chart',
         icon: 'location'
       }]
     }]
@@ -78,9 +78,6 @@ export const menuList: IMenuItem[] = [
         icon: 'location'
       }, {
         name: 'snow',
-        icon: 'location'
-      }, {
-        name: 'index',
         icon: 'location'
       }]
     }, {

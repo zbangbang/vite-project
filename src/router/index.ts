@@ -18,20 +18,11 @@ export const routes: RouteRecordRaw[] = [
         children: [
           {
             path: 'extends',
-            component: () => import('@/views/ts/type/index.vue')
+            component: () => import('@/views/ts/type/extends/index.vue')
           },
           {
             path: 'infer',
-            component: () => import('@/views/ts/infer/index.vue')
-          }
-        ]
-      },
-      {
-        path: 'props',
-        children: [
-          {
-            path: 'provide',
-            component: () => import('@/views/props/index.vue')
+            component: () => import('@/views/ts/type/infer/index.vue')
           }
         ]
       }
@@ -45,24 +36,20 @@ export const routes: RouteRecordRaw[] = [
         children: [
           {
             path: 'animation',
-            component: () => import('@/views/transition/animation.vue')
+            component: () => import('@/views/vue3/transition/animation/index.vue')
           },
           {
             path: 'fade',
-            component: () => import('@/views/transition/transitionEvent.vue')
+            component: () => import('@/views/vue3/transition/fade/index.vue')
           },
           {
             path: 'group',
-            component: () => import('@/views/transition/group.vue')
+            component: () => import('@/views/vue3/transition/group/index.vue')
           },
           {
             path: 'state',
-            component: () => import('@/views/transition/state.vue')
-          },
-          // {
-          //   path: 'provide',
-          //   component: () => import('@/views/provide/index.vue')
-          // }
+            component: () => import('@/views/vue3/transition/state/index.vue')
+          }
         ]
       },
       {
@@ -70,7 +57,7 @@ export const routes: RouteRecordRaw[] = [
         children: [
           {
             path: 'provide',
-            component: () => import('@/views/props/index.vue')
+            component: () => import('@/views/vue3/props/provide/index.vue')
           }
         ]
       },
@@ -79,7 +66,7 @@ export const routes: RouteRecordRaw[] = [
         children: [
           {
             path: 'drag',
-            component: () => import('@/views/directive/index.vue')
+            component: () => import('@/views/vue3/directive/drag/index.vue')
           }
         ]
       }
@@ -89,20 +76,11 @@ export const routes: RouteRecordRaw[] = [
     path: '/echarts',
     children: [
       {
-        path: 'pie-chart',
+        path: 'pieChart',
         children: [
           {
-            path: 'chart1',
-            component: () => import('@/views/echarts/index.vue')
-          }
-        ]
-      },
-      {
-        path: 'props',
-        children: [
-          {
-            path: 'provide',
-            component: () => import('@/views/props/index.vue')
+            path: 'chart',
+            component: () => import('@/views/echarts/pieChart/chart/index.vue')
           }
         ]
       }
@@ -116,19 +94,15 @@ export const routes: RouteRecordRaw[] = [
         children: [
           {
             path: 'fog',
-            component: () => import('@/views/cesium/weather/fog.vue')
+            component: () => import('@/views/cesium/weather/fog/index.vue')
           },
           {
             path: 'rain',
-            component: () => import('@/views/cesium/weather/rain.vue')
+            component: () => import('@/views/cesium/weather/rain/index.vue')
           },
           {
             path: 'snow',
-            component: () => import('@/views/cesium/weather/snow.vue')
-          },
-          {
-            path: 'command',
-            component: () => import('@/views/cesium/command/index.vue')
+            component: () => import('@/views/cesium/weather/snow/index.vue')
           }
         ]
       },
@@ -154,7 +128,7 @@ export const routes: RouteRecordRaw[] = [
         children: [
           {
             path: 'group',
-            component: () => import('@/views/konva/wcs/group.vue')
+            component: () => import('@/views/konva/wcs/group/index.vue')
           }
         ]
       }
@@ -168,15 +142,15 @@ export const routes: RouteRecordRaw[] = [
         children: [
           {
             path: 'l1',
-            component: () => import('@/views/webgl/lesson1/index.vue')
+            component: () => import('@/views/webgl/p1/l1/index.vue')
           },
           {
             path: 'l2',
-            component: () => import('@/views/webgl/lesson2/index.vue')
+            component: () => import('@/views/webgl/p1/l2/index.vue')
           },
           {
             path: 'l3',
-            component: () => import('@/views/webgl/lesson3/index.vue')
+            component: () => import('@/views/webgl/p1/l3/index.vue')
           }
         ]
       }
@@ -190,7 +164,7 @@ export const routes: RouteRecordRaw[] = [
         children: [
           {
             path: 'line',
-            component: () => import('@/views/openlayers/p1/line.vue')
+            component: () => import('@/views/openlayers/p1/line/index.vue')
           }
         ]
       }
@@ -200,8 +174,8 @@ export const routes: RouteRecordRaw[] = [
     path: '/fabric',
     children: [
       {
-        path: 'index',
-        component: () => import('@/views/fabric/index.vue')
+        path: 'demo',
+        component: () => import('@/views/fabric/demo/index.vue')
       }
     ]
   },
@@ -209,8 +183,8 @@ export const routes: RouteRecordRaw[] = [
     path: '/mapbox',
     children: [
       {
-        path: 'customLayer',
-        component: () => import('@/views/mapbox/custom/customLayer.vue')
+        path: 'custom',
+        component: () => import('@/views/mapbox/custom/index.vue')
       },
       {
         path: 'marker',
