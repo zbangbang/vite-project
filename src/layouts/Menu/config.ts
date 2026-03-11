@@ -117,6 +117,16 @@ export const menuList: IMenuItem[] = [
         name: 'l3',
         icon: 'location'
       }]
+    }, {
+      name: 'p2',
+      icon: 'location',
+      children: [{
+        name: 'l1',
+        icon: 'location'
+      }, {
+        name: 'l2',
+        icon: 'location'
+      }]
     }]
   }, {
     name: 'openlayers',
