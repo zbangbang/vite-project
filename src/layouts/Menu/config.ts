@@ -160,6 +160,13 @@ export const menuList: IMenuItem[] = [
       icon: 'location'
     }]
   }, {
+    name: 'three',
+    icon: 'bicycle',
+    children: [{
+      name: 'map',
+      icon: 'location'
+    }]
+  }, {
     name: 'maptest',
     icon: 'bicycle',
     children: [{

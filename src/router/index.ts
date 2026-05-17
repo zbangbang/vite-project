@@ -115,6 +115,10 @@ export const routes: RouteRecordRaw[] = [
         component: () => import('@/views/cesium/demo/index.vue')
       },
       {
+        path: 'rotateZ',
+        component: () => import('@/views/cesium/rotateZ/index.vue')
+      },
+      {
         path: 'cesium-s',
         component: () => import('@/views/cesium/cesium-s/index.vue')
       }
@@ -206,6 +210,15 @@ export const routes: RouteRecordRaw[] = [
       {
         path: 'layer',
         component: () => import('@/views/mapbox/layer/index.vue')
+      }
+    ]
+  },
+  {
+    path: '/three',
+    children: [
+      {
+        path: 'map',
+        component: () => import('@/views/three/map/index.vue')
       }
     ]
   },

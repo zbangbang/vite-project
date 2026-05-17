@@ -2,17 +2,19 @@
  * @FilePath: useCesium.ts
  * @Author: @zhangl
  * @Date: 2024-01-10 10:51:56
- * @LastEditTime: 2024-09-23 16:31:33
+ * @LastEditTime: 2026-04-23 16:50:43
  * @LastEditors: @zhangl
  * @Description:
  */
 import { ElMessage } from 'element-plus'
 import { onMounted, onUnmounted, shallowRef } from 'vue'
 import * as Cesium from 'cesium'
+import { buildModuleUrl, GeographicTilingScheme, TileMapServiceImageryProvider } from 'cesium'
 
 export default function useCesium(dom: string, options: any = {}) {
   const viewer = shallowRef<Cesium.Viewer | null>(null)
 
+  Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzNTdjNjViYS1hNDk5LTQzODMtODc4NS0yMzk5NTEwN2UzMzQiLCJpZCI6Nzg5OTcsImlhdCI6MTY0MTc3ODk5N30.Z0Ibu5rtP6bDo88xhIBwIdJJQsCKzrNfUqLsqQXQTCI'
   // 初始化地球
   const initCesium = async () => {
     viewer.value = new Cesium.Viewer(dom, {
@@ -53,12 +55,22 @@ export default function useCesium(dom: string, options: any = {}) {
       ...options
     })
 
-    viewer.value?.imageryLayers.addImageryProvider(
-      new Cesium.UrlTemplateImageryProvider({
-        url: `http://10.1.108.214:8888/gis/tiles/GeoQ_colors/{z}/{y}/{x}.png`,
-      }),
-      0
+    const tmsLayer = TileMapServiceImageryProvider.fromUrl(
+      buildModuleUrl(
+        `http://127.0.0.1:8888/gis/zhgyingxiang`,
+      ),
+      {
+        tilingScheme: new GeographicTilingScheme(), //瓦片平铺方案
+        fileExtension: 'jpeg',
+      },
     )
+    viewer.value?.imageryLayers.addImageryProvider(await tmsLayer, 0)
+    // viewer.value?.imageryLayers.addImageryProvider(
+    //   new Cesium.UrlTemplateImageryProvider({
+    //     url: `http://127.0.0.1:8888/gis/zhgyingxiang`,
+    //   }),
+    //   0
+    // )
 
     // const tms = await Cesium.TileMapServiceImageryProvider.fromUrl(Cesium.buildModuleUrl(`http://10.1.108.214:8888/gis/zhgyingxiang`), {
     //   tilingScheme: new Cesium.GeographicTilingScheme(),

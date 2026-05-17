@@ -2,13 +2,14 @@
  * @FilePath: particle.ts
  * @Author: @zhangl
  * @Date: 2025-08-11 14:46:58
- * @LastEditTime: 2026-03-11 11:30:50
+ * @LastEditTime: 2026-04-15 16:55:00
  * @LastEditors: @zhangl
  * @Description: 粒子效果
  */
 import { initHelpLine } from './config'
 import * as twgl from 'twgl.js'
 import testImg from '@/assets/wind/2016112000.png'
+import arrowImg from '@/assets/texture/arrow.png'
 import windData from '@/assets/wind/2016112000.json'
 twgl.setDefaults({ attribPrefix: 'a_' })
 
@@ -39,7 +40,7 @@ const ParticleShader = {
 
       float x = (v_particle_pos.x * 2.0) - 1.0; // [0, 1] -> [-1, 1]
       float y = (v_particle_pos.y * 2.0) - 1.0; // [0, 1] -> [-1, 1]
-      gl_PointSize = 1.0;
+      gl_PointSize = 8.0;
       gl_Position = u_mvpMatrix * vec4(x, y, 0, 1);
       // gl_Position = vec4(2.0 * v_particle_pos.x - 1.0, 1.0 - 2.0 * v_particle_pos.y, 0, 1);
     }
@@ -47,6 +48,7 @@ const ParticleShader = {
   fragmentShaderSource: `#version 300 es
     precision mediump float;
     uniform sampler2D u_sampler;
+    uniform sampler2D u_arrow_sampler;
     uniform vec2 u_wind_min;
     uniform vec2 u_wind_max;
     uniform sampler2D u_color_sampler;
@@ -62,7 +64,10 @@ const ParticleShader = {
           fract(16.0 * speed_t),
           floor(16.0 * speed_t) / 16.0);
 
-      outColor = texture(u_color_sampler, ramp_pos);
+      vec4 c1 = texture(u_color_sampler, ramp_pos);
+      vec4 c2 = texture(u_arrow_sampler, gl_PointCoord);
+      // outColor = texture(u_color_sampler, ramp_pos);
+      outColor = c1 * c2;
     }
   `,
   updateVS: `#version 300 es
@@ -217,6 +222,12 @@ export const initParticle = (gl: WebGLRenderingContext) => {
       numComponents: 3,
       data: [0, 1, 2, 1, 2, 3],
     },
+  })
+
+  const arrowTexture = twgl.createTexture(gl, {
+    src: arrowImg,
+    min: gl.NEAREST,
+    mag: gl.NEAREST
   })
 
   let total = 16384
@@ -401,6 +412,7 @@ export const initParticle = (gl: WebGLRenderingContext) => {
       u_sampler: texture,
       u_particles: particleFbo1.attachments[0],
       u_color_sampler: colorTexture,
+      u_arrow_sampler: arrowTexture,
       u_particles_res: particleRes,
       u_wind_min: [windData.uMin, windData.vMin],
       u_wind_max: [windData.uMax, windData.vMax],

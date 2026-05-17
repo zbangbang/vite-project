@@ -3,7 +3,7 @@
  * @Author: Aouvv Wang
  * @Date: 2024-01-10 11:19:30
  * @LastEditors: @zhangl
- * @LastEditTime: 2024-08-29 16:21:05
+ * @LastEditTime: 2026-04-23 15:37:31
  * @Description:
  */
 import img1 from '@/assets/no3_2019/no3-1-0.png'
@@ -63,11 +63,8 @@ export enum BtnType {
   '文本',
   '底图切换',
   '经纬网',
-  '层级',
   '导出图片',
-  '开启事件',
-  '表面坐标拾取',
-  '拾取几何体'
+  '空间线'
 }
 
 export interface IBtn {
@@ -78,28 +75,8 @@ export interface IBtn {
 
 export const btnTypeList: IBtn[] = [
   {
-    label: '层级',
-    value: BtnType.层级,
+    label: '空间线',
+    value: BtnType.空间线,
     flag: false
-  },
-  {
-    label: '导出图片',
-    value: BtnType.导出图片,
-    flag: false
-  },
-  {
-    label: '开启事件',
-    value: BtnType.开启事件,
-    flag: false
-  },
-  {
-    label: '表面坐标拾取',
-    value: BtnType.表面坐标拾取,
-    flag: false
-  },
-  {
-    label: '拾取几何体',
-    value: BtnType.拾取几何体,
-    flag: false
-  },
+  }
 ]
